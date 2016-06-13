@@ -132,6 +132,7 @@ create_table_stmt
    ( ( K_PRIMARY K_KEY | K_UNIQUE ) '(' indexed_column ( ',' indexed_column )* ')' conflict_clause
    | K_CHECK '(' expr ')'
    | K_FOREIGN K_KEY '(' column_name ( ',' column_name )* ')' foreign_key_clause
+   | K_KEY table_or_index_name '(' column_name  ')'
    )
  ;
 
@@ -281,11 +282,16 @@ vacuum_stmt
 column_def
  : column_name type_name? column_constraint*
  ;
-
+/*
 type_name
  : name 
  | name ( ('(' signed_number ')')
   			| ('(' signed_number ',' signed_number ')') )?
+ ;
+*/
+ type_name
+ 	: name ( '(' signed_number ')'
+  			| '(' signed_number ',' signed_number ')' )?
  ;
 
 column_constraint

@@ -1,0 +1,303 @@
+public class Demo {
+    private Integer startDate;
+    private Double promoPrice;
+    private Integer everSeckill;
+    private String tagHome;
+    private Integer ynIndex;
+    private String jumpUrl;
+    private String imageUrl;
+    private Integer seckillNum;
+    private Integer seckillactivityId;
+    private Double jdPrice;
+    private Integer endDate;
+    private Integer specialKill;
+    private Integer spuOrder;
+    private String seckillShopId;
+    private Double fprice;
+    private Integer promotionId;
+    private String modifer;
+    private Integer jumpType;
+    private Integer tokenId;
+    private String ipadShopId;
+    private Integer created;
+    private Integer skuSelect;
+    private String shopId;
+    private String operateWord;
+    private Integer skuId;
+    private String tagInner;
+    private Integer specialWithoutFilter;
+    private String mpageAddress;
+    private Integer cornerIconType;
+    private Double marketPrice;
+    private String preStatus;
+    private String status;
+    private Integer seckillType;
+    private Integer spuId;
+    private String ipadMpageAddress;
+    private Integer modified;
+    private Integer withoutFilter;
+    private String thirdKindId;
+    private String shopName;
+    private String invalidDisplay;
+    private String productName;
+    private String memberLevel;
+    private Integer tagColor;
+    public Integer getStartDate(){
+        return  this.startDate;
+    }
+    public Integer setStartDate(Integer startDate){
+        this.startDate = startDate;
+    }
+    public Double getPromoPrice(){
+        return  this.promoPrice;
+    }
+    public Double setPromoPrice(Double promoPrice){
+        this.promoPrice = promoPrice;
+    }
+    public Integer getEverSeckill(){
+        return  this.everSeckill;
+    }
+    public Integer setEverSeckill(Integer everSeckill){
+        this.everSeckill = everSeckill;
+    }
+    public String getTagHome(){
+        return  this.tagHome;
+    }
+    public String setTagHome(String tagHome){
+        this.tagHome = tagHome;
+    }
+    public Integer getYnIndex(){
+        return  this.ynIndex;
+    }
+    public Integer setYnIndex(Integer ynIndex){
+        this.ynIndex = ynIndex;
+    }
+    public String getJumpUrl(){
+        return  this.jumpUrl;
+    }
+    public String setJumpUrl(String jumpUrl){
+        this.jumpUrl = jumpUrl;
+    }
+    public String getImageUrl(){
+        return  this.imageUrl;
+    }
+    public String setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
+    }
+    public Integer getSeckillNum(){
+        return  this.seckillNum;
+    }
+    public Integer setSeckillNum(Integer seckillNum){
+        this.seckillNum = seckillNum;
+    }
+    public Integer getSeckillactivityId(){
+        return  this.seckillactivityId;
+    }
+    public Integer setSeckillactivityId(Integer seckillactivityId){
+        this.seckillactivityId = seckillactivityId;
+    }
+    public Double getJdPrice(){
+        return  this.jdPrice;
+    }
+    public Double setJdPrice(Double jdPrice){
+        this.jdPrice = jdPrice;
+    }
+    public Integer getEndDate(){
+        return  this.endDate;
+    }
+    public Integer setEndDate(Integer endDate){
+        this.endDate = endDate;
+    }
+    public Integer getSpecialKill(){
+        return  this.specialKill;
+    }
+    public Integer setSpecialKill(Integer specialKill){
+        this.specialKill = specialKill;
+    }
+    public Integer getSpuOrder(){
+        return  this.spuOrder;
+    }
+    public Integer setSpuOrder(Integer spuOrder){
+        this.spuOrder = spuOrder;
+    }
+    public String getSeckillShopId(){
+        return  this.seckillShopId;
+    }
+    public String setSeckillShopId(String seckillShopId){
+        this.seckillShopId = seckillShopId;
+    }
+    public Double getFprice(){
+        return  this.fprice;
+    }
+    public Double setFprice(Double fprice){
+        this.fprice = fprice;
+    }
+    public Integer getPromotionId(){
+        return  this.promotionId;
+    }
+    public Integer setPromotionId(Integer promotionId){
+        this.promotionId = promotionId;
+    }
+    public String getModifer(){
+        return  this.modifer;
+    }
+    public String setModifer(String modifer){
+        this.modifer = modifer;
+    }
+    public Integer getJumpType(){
+        return  this.jumpType;
+    }
+    public Integer setJumpType(Integer jumpType){
+        this.jumpType = jumpType;
+    }
+    public Integer getTokenId(){
+        return  this.tokenId;
+    }
+    public Integer setTokenId(Integer tokenId){
+        this.tokenId = tokenId;
+    }
+    public String getIpadShopId(){
+        return  this.ipadShopId;
+    }
+    public String setIpadShopId(String ipadShopId){
+        this.ipadShopId = ipadShopId;
+    }
+    public Integer getCreated(){
+        return  this.created;
+    }
+    public Integer setCreated(Integer created){
+        this.created = created;
+    }
+    public Integer getSkuSelect(){
+        return  this.skuSelect;
+    }
+    public Integer setSkuSelect(Integer skuSelect){
+        this.skuSelect = skuSelect;
+    }
+    public String getShopId(){
+        return  this.shopId;
+    }
+    public String setShopId(String shopId){
+        this.shopId = shopId;
+    }
+    public String getOperateWord(){
+        return  this.operateWord;
+    }
+    public String setOperateWord(String operateWord){
+        this.operateWord = operateWord;
+    }
+    public Integer getSkuId(){
+        return  this.skuId;
+    }
+    public Integer setSkuId(Integer skuId){
+        this.skuId = skuId;
+    }
+    public String getTagInner(){
+        return  this.tagInner;
+    }
+    public String setTagInner(String tagInner){
+        this.tagInner = tagInner;
+    }
+    public Integer getSpecialWithoutFilter(){
+        return  this.specialWithoutFilter;
+    }
+    public Integer setSpecialWithoutFilter(Integer specialWithoutFilter){
+        this.specialWithoutFilter = specialWithoutFilter;
+    }
+    public String getMpageAddress(){
+        return  this.mpageAddress;
+    }
+    public String setMpageAddress(String mpageAddress){
+        this.mpageAddress = mpageAddress;
+    }
+    public Integer getCornerIconType(){
+        return  this.cornerIconType;
+    }
+    public Integer setCornerIconType(Integer cornerIconType){
+        this.cornerIconType = cornerIconType;
+    }
+    public Double getMarketPrice(){
+        return  this.marketPrice;
+    }
+    public Double setMarketPrice(Double marketPrice){
+        this.marketPrice = marketPrice;
+    }
+    public String getPreStatus(){
+        return  this.preStatus;
+    }
+    public String setPreStatus(String preStatus){
+        this.preStatus = preStatus;
+    }
+    public String getStatus(){
+        return  this.status;
+    }
+    public String setStatus(String status){
+        this.status = status;
+    }
+    public Integer getSeckillType(){
+        return  this.seckillType;
+    }
+    public Integer setSeckillType(Integer seckillType){
+        this.seckillType = seckillType;
+    }
+    public Integer getSpuId(){
+        return  this.spuId;
+    }
+    public Integer setSpuId(Integer spuId){
+        this.spuId = spuId;
+    }
+    public String getIpadMpageAddress(){
+        return  this.ipadMpageAddress;
+    }
+    public String setIpadMpageAddress(String ipadMpageAddress){
+        this.ipadMpageAddress = ipadMpageAddress;
+    }
+    public Integer getModified(){
+        return  this.modified;
+    }
+    public Integer setModified(Integer modified){
+        this.modified = modified;
+    }
+    public Integer getWithoutFilter(){
+        return  this.withoutFilter;
+    }
+    public Integer setWithoutFilter(Integer withoutFilter){
+        this.withoutFilter = withoutFilter;
+    }
+    public String getThirdKindId(){
+        return  this.thirdKindId;
+    }
+    public String setThirdKindId(String thirdKindId){
+        this.thirdKindId = thirdKindId;
+    }
+    public String getShopName(){
+        return  this.shopName;
+    }
+    public String setShopName(String shopName){
+        this.shopName = shopName;
+    }
+    public String getInvalidDisplay(){
+        return  this.invalidDisplay;
+    }
+    public String setInvalidDisplay(String invalidDisplay){
+        this.invalidDisplay = invalidDisplay;
+    }
+    public String getProductName(){
+        return  this.productName;
+    }
+    public String setProductName(String productName){
+        this.productName = productName;
+    }
+    public String getMemberLevel(){
+        return  this.memberLevel;
+    }
+    public String setMemberLevel(String memberLevel){
+        this.memberLevel = memberLevel;
+    }
+    public Integer getTagColor(){
+        return  this.tagColor;
+    }
+    public Integer setTagColor(Integer tagColor){
+        this.tagColor = tagColor;
+    }
+}

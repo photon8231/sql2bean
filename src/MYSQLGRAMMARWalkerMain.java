@@ -1,5 +1,8 @@
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +11,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.junit.Test;
 
 public class MYSQLGRAMMARWalkerMain {
 
@@ -112,23 +116,199 @@ public class MYSQLGRAMMARWalkerMain {
 		//System.out.println(listener.columns.values());
 		
 		System.out.println(tree.toStringTree(parser)); // print LISP-style tree
+		MYSQLGRAMMARWalkerMain walkerMain = new MYSQLGRAMMARWalkerMain();
+		Map<String, String> columns = listener.columns;
+		Map<String, String> jTypeMap = walkerMain.sqlTypeToJType(columns);
+		System.out.println(jTypeMap);
+		
+		String bean = walkerMain.fieldToBean(jTypeMap, "Demo" );
+		System.out.println(bean);
 		
 	}
 	
-	public String filedToBean(Map<String, String> inputFiled){
+	@Test
+	public void testHandleSql() throws Exception{
+		MYSQLGRAMMARWalkerMain walkerMain = new MYSQLGRAMMARWalkerMain();
+		String output = "E:\\eclipseAntlr\\sql2beantool\\src\\";
+		//E:\eclipseAntlr\sql2beantool\src
+		walkerMain.handleSql("E:\\eclipseAntlr\\sql2beantool\\src\\create.sql", output, "Demo");
+		
+	}
+	
+	public void handleSql(String inputFile, String output, String beanName)  throws Exception{
+		output = output + "\\" + beanName + ".java";
+		InputStream is =  new FileInputStream(inputFile);
+		MYSQLGRAMMARLexer lexer = new MYSQLGRAMMARLexer(
+				new ANTLRInputStream(is));
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		MYSQLGRAMMARParser parser = new MYSQLGRAMMARParser(tokens);
+		parser.setBuildParseTree(true); // tell ANTLR to build a parse tree
+		ParseTree tree = parser.create_table_stmt();
+
+		ParseTreeWalker walker = new ParseTreeWalker();
+		MISQLGRAMMARMainListenerImpl listener = new MISQLGRAMMARMainListenerImpl();
+		walker.walk(listener, tree);
+		System.out.println(listener.columns);
+		//System.out.println(listener.columns.keySet());
+		
+		//System.out.println(listener.columns.values());
+		
+		System.out.println(tree.toStringTree(parser)); // print LISP-style tree
+		//MYSQLGRAMMARWalkerMain walkerMain = new MYSQLGRAMMARWalkerMain();
+		Map<String, String> columns = listener.columns;
+		Map<String, String> jTypeMap = sqlTypeToJType(columns);
+		System.out.println(jTypeMap);
+		
+		String bean = fieldToBean(jTypeMap, beanName);
+		System.out.println(bean);
+		
+		OutputStream os = new FileOutputStream(output);
+		
+		
+		File file = new File(output);
+		
+		if(file.exists()){
+			file.delete();
+		}
+		os.write(bean.getBytes());
+		
+		os.close();
+		
+	}
+	
+	
+	/*
+	 * 输入：name:type
+	 * 输出：
+	 * */
+	public Map<String, String> sqlTypeToJType(Map<String, String> inputSqlFiled){
 		Map<String, String> beanFiledMap = new HashMap<String, String>();
 		//sql 类型转java 类型
-		for(Map.Entry<String ,String> entry : inputFiled.entrySet()){
-			String key = entry.getKey();
-			String value = entry.getValue();
+		for(Map.Entry<String ,String> entry : inputSqlFiled.entrySet()){
+			String field = entry.getKey();
+			String sqlType = entry.getValue();
+			String jType = TypeMap.typeMap.get(sqlType.toUpperCase());
+			//对字段的下划线处理，并生成 bean 格式的 字段
+			field =  field.replaceAll("`", "");
+			field = handleFild(field);
+			
+			beanFiledMap.put(field, jType);
 		}
 		
+		return beanFiledMap;
+	}
+	
+	public Map<String, String> genDbBeanFieldMap(Map<String, String> inputSqlFiled){
+		Map<String, String> dbBeanMap = new HashMap<String, String>();
+		//sql 类型转java 类型
+		for(Map.Entry<String ,String> entry : inputSqlFiled.entrySet()){
+			String field = entry.getKey();
+			String sqlType = entry.getValue();
+			
+			//对字段的下划线处理，并生成 bean 格式的 字段
+			field =  field.replaceAll("`", "");
+			String newField = handleFild(field);
+			//根据db field 生成java bean field
+			
+			//db:bean
+			dbBeanMap.put(field, newField);
+		}
 		
+		return dbBeanMap;
 		
-		return null;
+	}
+	
+	// db 字段转 为bean field
+	public String handleFild(String field){
+		String [] fildParts = field.split("_");
+		String newFiled = "";
+		for(String part : fildParts){
+			//首字母大写
+			String lowField = part.toLowerCase();
+			String  firstUpField = lowField.substring(0, 1).toUpperCase() + lowField.substring(1);
+			
+			newFiled = newFiled + firstUpField;
+		}
+		//字段的首字母小写
+		newFiled = newFiled.substring(0,  1).toLowerCase() +  newFiled.substring(1);
+		
+		return newFiled;
+	}
+	
+	public String fieldToBean(Map<String, String> filedMap, String beanName){
+		String beanClassStmt = "";
+		String fieldStmtTotal = "";
+		String methodStmtTotal = "";
+		String decl = "public class " + beanName  + SPACE  + "{\n";
+		
+		for(Map.Entry<String, String> entry : filedMap.entrySet()){
+			String field = entry.getKey();
+			String type = entry.getValue();
+			
+			String  fieldStmt = genFieldStmt(field, type);
+			String  getMethod = genGetMethod(field, type);
+			String 	setMethod = genSetMethod(field, type);
+			
+			String methodStmt = getMethod + setMethod;
+			
+			fieldStmtTotal = fieldStmtTotal + fieldStmt;
+			methodStmtTotal = methodStmtTotal + methodStmt;
+			
+		}
+		beanClassStmt = decl + fieldStmtTotal + methodStmtTotal;
+		
+		String end = RBRACE + NEWLINE;
+		return beanClassStmt + end;
+	}
+	
+	public String genFieldStmt(String field, String type){
+		String stmt = genXSpace(4) + "private" + SPACE + type + SPACE + field + ";\n";
+		
+		return stmt;
+	}
+	
+	public String genGetMethod(String field, String type){
+		//首字母大写
+		String  upFirstField = field.substring(0, 1).toUpperCase() + field.substring(1);
+		
+		String decl = genXSpace(4) + "public" +  SPACE  + type + SPACE +  "get" + upFirstField + LBRACKET +  RBRACKET + LBRACE + NEWLINE;
+		String body = genXSpace(8) + "return  this." + field + ";" + NEWLINE;
+		String getMethod = decl + body + genXSpace(4) + RBRACE + NEWLINE;
+		return getMethod;
+	}
+	
+	public String genSetMethod(String field, String type){
+		String  upFirstField = field.substring(0, 1).toUpperCase() + field.substring(1);
+		
+		String setMethod = genXSpace(4) + "public" +  SPACE  + "void" + SPACE +  "set" + upFirstField + 
+				LBRACKET + type + SPACE + field  + RBRACKET ;
+		setMethod = setMethod + LBRACE + "\n";
+		String body = genXSpace(8) + "this." + field + " = " + field + ";\n";
+		
+		setMethod = setMethod + body ;
+		setMethod = setMethod + genXSpace(4) + RBRACE + NEWLINE;
+		return setMethod;
+	}
+	
+	public String genXSpace(Integer num){
+		StringBuilder space = new StringBuilder();
+		for(int i =0; i < num.intValue(); i++ ){
+			space = space.append(SPACE);
+		}
+		
+		return space.toString();
 	}
 	
 	
+	public static String SPACE = " ";
+	public static String PUBLIC = "public";
+	public static String LBRACKET = "(";
+	public static String RBRACKET = ")";
+	public static String LBRACE = "{";
+	public static String RBRACE = "}";
+	public static String NEWLINE = "\n";
+	
+	public static String SEMICOLON = ";";
 	
 	
 

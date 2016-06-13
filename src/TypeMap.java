@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class TypteMap {
+public class TypeMap {
 	public static Map<String, String> typeMap = new HashMap<String, String>();
 	
 	//java的基本类型
@@ -22,6 +22,7 @@ public class TypteMap {
 		typeMap.put("DOUBLE", DOUBLE);
 		typeMap.put("DOUBLE", DOUBLE);
 		typeMap.put("LONG",  LONG);
+		typeMap.put("BIGINT", INTEGER);
 	}
 	
 
